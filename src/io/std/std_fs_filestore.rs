@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::io::{Error};
 use std::path::Path;
-use crate::domain::file::gateway::file_storage::FileStorage;
+use crate::domain::file::gateway::retrieve_file::RetrieveFile;
 
 /// A concrete implementation of the FileStorage trait that uses the standard library to
 /// interact with the file system, and retrieve a file.
@@ -30,8 +30,8 @@ impl StdFSFileStorage {
         StdFSFileStorage { }
     }
 }
-impl FileStorage for StdFSFileStorage {
-    fn retrieve_file(&self, file_name: &str) -> Result<File, Error> {
+impl RetrieveFile for StdFSFileStorage {
+    fn retrieve(&self, file_name: &str) -> Result<File, Error> {
         match File::open(Path::new(file_name)) {
             Ok(file) => {
                 Ok(file)

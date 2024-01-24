@@ -2,13 +2,13 @@ use std::io::{Error, ErrorKind};
 use std::sync::Arc;
 use crate::domain::resource::associate_signature_with_resource::{associate_signature_with_resource, AssociateSignatureRequest};
 use crate::domain::resource::gateway::signature_storage::SignatureStorage;
-use crate::kernel::values::ResourceSignature;
-use crate::kernel::values::resource_id::ResourceId;
+use crate::kernel::values::Signature;
+use crate::kernel::values::id::Id;
 
 #[test]
 fn successful_assign_signature_to_resource() {
 
-    let request = AssociateSignatureRequest { id: ResourceId::new(1).unwrap(), signature: String::from("some-signature") };
+    let request = AssociateSignatureRequest { id: Id::new(1).unwrap(), signature: String::from("some-signature") };
     let storage = Arc:: new(MockSignatureStorage{}) as Arc<dyn SignatureStorage>;
         match associate_signature_with_resource(request, storage.as_ref()) {
         Ok(_) => { assert!(true); }
@@ -17,7 +17,7 @@ fn successful_assign_signature_to_resource() {
 }
 #[test]
 fn signature_store_returns_error() {
-    let request = AssociateSignatureRequest { id: ResourceId::new(1).unwrap(), signature: String::from("some-signature") };
+    let request = AssociateSignatureRequest { id: Id::new(1).unwrap(), signature: String::from("some-signature") };
     let storage = Arc::new(ErrorSignatureStorage {}) as Arc<dyn SignatureStorage>;
     match associate_signature_with_resource(request, storage.as_ref()) {
         Ok(_) => { assert!(false, "Should not have failed"); }
@@ -31,14 +31,14 @@ fn signature_store_returns_error() {
 
 struct MockSignatureStorage { }
 impl SignatureStorage for MockSignatureStorage {
-    fn associate(&self, _id: ResourceId, _signature: ResourceSignature) -> Result<(), Error> {
+    fn associate(&self, _id: Id, _signature: Signature) -> Result<(), Error> {
         Ok(())
     }
 
 }
     struct ErrorSignatureStorage { }
     impl SignatureStorage for ErrorSignatureStorage {
-        fn associate(&self, _id: ResourceId, _signature: ResourceSignature) -> Result<(), Error> {
+        fn associate(&self, _id: Id, _signature: Signature) -> Result<(), Error> {
             Err(Error::new(ErrorKind::Other, "Error from ErrorSignatureStorage"))
         }
     }

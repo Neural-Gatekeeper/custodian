@@ -4,7 +4,7 @@ use actix_web::web::{Data, Json};
 use serde::Deserialize;
 use crate::domain::resource::associate_signature_with_resource::{associate_signature_with_resource, AssociateSignatureRequest};
 use crate::domain::resource::gateway::signature_storage::SignatureStorage;
-use crate::kernel::values::resource_id::ResourceId;
+use crate::kernel::values::id::Id;
 
 #[derive(Deserialize)]
 pub struct AssociateSignatureHTTPRequest {
@@ -15,7 +15,7 @@ pub struct AssociateSignatureHTTPRequest {
 pub async fn post(request: Json<AssociateSignatureHTTPRequest>,
                   signature_storage: Data<Arc<dyn SignatureStorage>>) -> impl Responder {
 
-    let request = match ResourceId::new(request.id) {
+    let request = match Id::new(request.id) {
         Ok(id ) => { AssociateSignatureRequest { id, signature: request.signature.clone(), } }
         Err(e) => { return HttpResponse::BadRequest().body(e.to_string()) }
     };

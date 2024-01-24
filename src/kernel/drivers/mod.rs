@@ -1,5 +1,5 @@
-pub mod atomic_resource_generator;
-pub mod inmemory_resource_storage;
+pub mod atomic_id_generator;
+pub mod inmemory_storage;
 
 #[cfg(test)]
-mod atomic_resource_generator_tests;
+mod atomic_id_generator_tests;

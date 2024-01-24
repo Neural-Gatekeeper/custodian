@@ -1,6 +1,6 @@
 use std::fs::File;
 use std::io::Error;
-use crate::domain::file::gateway::file_storage::FileStorage;
+use crate::domain::file::gateway::retrieve_file::RetrieveFile;
 
 /// Retrieve a file from the file storage
 ///
@@ -30,6 +30,6 @@ use crate::domain::file::gateway::file_storage::FileStorage;
 ///
 /// This function is a domain use-case used to retrieve a file from the file storage
 ///
-pub fn retrieve_file_from(file_path: &str, storage: &dyn FileStorage) -> Result<File, Error> {
-    storage.retrieve_file(file_path)
+pub fn retrieve_file_from(file_path: &str, storage: &dyn RetrieveFile) -> Result<File, Error> {
+    storage.retrieve(file_path)
 }

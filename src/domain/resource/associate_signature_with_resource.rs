@@ -1,13 +1,13 @@
 use std::io::{Error, ErrorKind};
 use crate::domain::resource::gateway::signature_storage::SignatureStorage;
-use crate::kernel::values::resource_id::ResourceId;
-use crate::kernel::values::ResourceSignature;
+use crate::kernel::values::id::Id;
+use crate::kernel::values::Signature;
 use crate::kernel::values::value_object::ValueObject;
 
 #[derive(Debug)]
 pub struct AssociateSignatureRequest {
-    pub id: ResourceId,
-    pub signature: ResourceSignature,
+    pub id: Id,
+    pub signature: Signature,
 }
 
 pub fn associate_signature_with_resource(

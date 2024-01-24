@@ -1,8 +1,8 @@
-pub mod resource_id;
+pub mod id;
 pub mod value_object;
 
 #[cfg(test)]
-mod resource_id_tests;
+mod id_tests;
 
 
-pub type ResourceSignature = String;
+pub type Signature = String;
